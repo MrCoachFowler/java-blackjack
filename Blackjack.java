@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class Blackjack {
     public static void main(String[] args)
     {
-        int BETAMOUNT = 2;
         Scanner input = new Scanner(System.in);
         ArrayList<BlackJackPlayer> players = new ArrayList<BlackJackPlayer>(0);
         BlackJackDealer dealer = new BlackJackDealer();
@@ -18,7 +17,7 @@ public class Blackjack {
         }
 
         String quit = "n";
-        while(quit != "y")
+        while(!quit.equals("y"))
         {
             Deck deck = new Deck();
             deck.shuffle();
@@ -26,7 +25,7 @@ public class Blackjack {
             //take bets
             for(BlackJackPlayer player : players)
             {
-                player.bet(BETAMOUNT);
+                player.bet();
             }
             //deal cards
             for(int h = 0; h < 2; h++)
@@ -42,12 +41,13 @@ public class Blackjack {
             //players turns
             for(BlackJackPlayer player : players)
             {
-                System.out.println("Dealer: ");
-                dealer.showCards();
                 boolean stayed = false;
                 while(!stayed)
                 {
                     //print out cards
+                    clearScreen();
+                    System.out.println("Dealer: ");
+                    dealer.showCards(false);
                     for(BlackJackPlayer plyr : players)
                     {
                         if(player == plyr)
@@ -67,7 +67,7 @@ public class Blackjack {
 
 
                     //handle hit or stay
-                    System.out.print("H to hit or S to stay: ");
+                    System.out.print(player.name + ", H to hit or S to stay: ");
                     String hOrS = input.nextLine();
                     if(hOrS.equals("h") || hOrS.equals("H"))
                     {
@@ -86,6 +86,7 @@ public class Blackjack {
             
             //dealer turn
             dealer.play(deck);
+
 
             //allocates winnings
             int dealerVal = dealer.getCardsValue();
@@ -115,5 +116,10 @@ public class Blackjack {
         }
     
         input.close();
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

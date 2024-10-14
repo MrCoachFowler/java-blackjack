@@ -21,11 +21,11 @@ public class BlackJackDealer extends BlackJackPlayer
             }
         }
     }
-    public void showCards()
+    public void showCards(boolean showFullHand)
     {
         for(int i = 0; i < this.cards.size(); i++)
         {
-            if(i == 0)
+            if(i == 0 || showFullHand)
             {
                 String suit = this.cards.get(i).suit;
                 String name = this.cards.get(i).name;

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class BlackJackPlayer {
     
@@ -13,10 +14,26 @@ public class BlackJackPlayer {
         this.name = name;
     }
 
-    public void bet(int value)
+    public void bet()
     {
-        this.bet = value;
-        this.money -= value;
+        Scanner input = new Scanner(System.in);
+        boolean isValidBet = false;
+        int bet = 0;
+        while(!isValidBet)
+        {
+            System.out.println(this.name + ", specify a bet (min 5, max 20)");
+            bet = input.nextInt();
+            if(bet >= 5 && bet <= 20)
+            {
+                isValidBet = true;
+                this.money -= bet;
+                this.bet = bet;
+            }
+            else
+            {
+                System.out.println("Bet does not meet criteria");
+            }
+        }
     }
 
     public void drawCard(Card card)
